@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfAccountDatabase xmlns:i="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://schemas.datacontract.org/2004/07/Leder_Efter_Server">
+	<AccountDatabase>
+		<active>false</active>
+		<identity>0</identity>
+		<password>111</password>
+		<totalPlay>1</totalPlay>
+		<totalScore>7</totalScore>
+		<username>111</username>
+	</AccountDatabase>
+	<AccountDatabase>
+		<active>false</active>
+		<identity>0</identity>
+		<password>123</password>
+		<totalPlay>4</totalPlay>
+		<totalScore>14</totalScore>
+		<username>123</username>
+	</AccountDatabase>
+	<AccountDatabase>
+		<active>false</active>
+		<identity>0</identity>
+		<password>mooara</password>
+		<totalPlay>3</totalPlay>
+		<totalScore>20</totalScore>
+		<username>mooara</username>
+	</AccountDatabase>
+	<AccountDatabase>
+		<active>false</active>
+		<identity>0</identity>
+		<password>123</password>
+		<totalPlay>3</totalPlay>
+		<totalScore>26</totalScore>
+		<username>ulaj</username>
+	</AccountDatabase>
+</ArrayOfAccountDatabase>
