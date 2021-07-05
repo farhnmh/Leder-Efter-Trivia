@@ -433,14 +433,240 @@ public static void HostRoomValidation(Packet _packet)
 ```
 
 #### 2. Join A Room
+Process Function:
+- client sends room code
+- the server receives the code and validates whether there is a room with the same code
+- if there is, the server will broadcast client data to other clients
+- otherwise the process will fail
+- server validation result sent to client
+##### Server Side
+- The JoinRoomValidation() is a function that will process room validation whether there is a room with the same code as the one sent by the client.
+```C#
+public static string JoinRoomValidation(string code, int id, string uname)
+{
+    foreach (RoomDatabase oroom in roomDatabase)
+    {
+        if (code == oroom.code)
+        {
+            JoinRoom(code, id, uname);
+            return "joined succesfully";
+        }
+    }
+
+    return "join failed! change your room code or host a new room";
+}
+```
+
+- The JoinRoom() is a function that will enter the client into the room with the same code according to the client request, then send the relevant client data to all existing clients.
+```C#
+public static void JoinRoom(string _code, int id,string _uname)
+{
+    for (int i = 0; i < roomDatabase.Count; i++)
+    {
+        if (_code == roomDatabase[i].code)
+        {
+            bool playerJoined = false;
+            foreach (PlayerJoinedDatabase oplayer in roomDatabase[roomDatabase.Count - 1].playerJoinedDatabase)
+            {
+                if (_uname == oplayer.username)
+                    playerJoined = true;
+            }
+
+            if (!playerJoined)
+            {
+                roomDatabase[i].playerJoinedDatabase.Add(new PlayerJoinedDatabase(id, _uname, 0));
+
+                for (int j = 0; j < roomDatabase[i].playerJoinedDatabase.Count; j++)
+                {
+                    ServerSend.BroadcastPlayerJoined(_code, roomDatabase[i].playerJoinedDatabase[j].id,                                               roomDatabase[i].playerJoinedDatabase[j].username);
+                }
+            }
+        }
+    }
+}
+```
+
+##### Client Side
+- The JoinRoomValidation() is a function that will add a client to an existing room with the code that has been sent.
+```C#
+public static void JoinRoomValidation(Packet _packet)
+{
+    string _msg = _packet.ReadString();
+    UIMenuManager.instance.notifText.text = _msg;
+
+    if (_msg == "joined succesfully")
+    {
+        Client.instance.isPlay = true;
+    }
+}
+```
+
+- The AddPlayerToDatabase() is a function that will accept all client data that joins the room with the same code.
+```C#
+public static void AddPlayerToDatabase(Packet _packet)
+{
+    string _codeRoom = _packet.ReadString();
+    int _id = _packet.ReadInt();
+    string _uname = _packet.ReadString();
+
+    if (_codeRoom == RoomDatabase.instance.roomCode)
+    {
+        RoomDatabase.instance.AddPlayerToDatabase(_id, _uname);
+    }
+}
+```
+
 #### 3. Leave A Room
+Process Function:
+- client sends room code
+- the server receives the code and validates whether there is a room with the same code
+- if there is, the server will broadcast client data to other clients for deletion from database
+- otherwise the process will fail
+- server validation result sent to client
+##### Server Side
+- The LeaveRoom() is a function that will delete client data that has sent the room code to get out of the room.
+```C#
+public static void LeaveRoom(string _code, string _uname)
+{
+    for (int i = 0; i < roomDatabase.Count; i++)
+    {
+        if (_code == roomDatabase[i].code)
+        {
+            for (int j = 0; j < roomDatabase[i].playerJoinedDatabase.Count; j++)
+            {
+                if (_uname == roomDatabase[i].playerJoinedDatabase[j].username)
+                {
+                    roomDatabase[i].playerJoinedDatabase.RemoveAt(j);
+                    Console.WriteLine($"Player-{_uname} Leave Room w/ Code: {_code}");
+                }
+            }
+        }
+    }
+}
+```
+
+##### Client Side
+- The LeaveRoomValidation() is a function that will delete client data that has sent the room code to get out of the room.
+```C#
+public static void LeaveRoomValidation(Packet _packet)
+{
+    string _codeRoom = _packet.ReadString();
+    string _uname = _packet.ReadString();
+
+    if (_codeRoom == RoomDatabase.instance.roomCode)
+    {
+        RoomDatabase.instance.RemovePlayerFromDatabase(_uname);
+        UILobbyManager.instance.playerLeft = true;
+    }
+}
+```
+
 #### 4. Destroy A Room
+Process Function:
+- client sends room code
+- the server receives the code and validates whether there is a room with the same code
+- if there is, the server will delete the room and its database
+- otherwise the process will fail
+- server validation result sent to client
+##### Server Side
+- The DestroyRoom() is a function that will delete the database room and all clients in it.
+```C#
+public static void DestroyRoom(string _code)
+{
+    for (int i = 0; i < roomDatabase.Count; i++)
+    {
+        if (_code == roomDatabase[i].code)
+        {
+            roomDatabase.RemoveAt(i);
+            Console.WriteLine($"Room Destroyed Succesfully w/ Code: {_code}");
+        }
+    }
+}
+```
+
+##### Client Side
+- The DestroyRoomValidation() is a function that will delete the database room and all clients in it.
+```C#
+public static void DestroyRoomValidation(Packet _packet)
+{
+    string _codeRoom = _packet.ReadString();
+
+    if (_codeRoom == RoomDatabase.instance.roomCode)
+    {
+        RoomDatabase.instance.RemoveDatabase();
+    }
+}
+```
 
 ### Player's Progress Handler
+In this feature, all game progress data for each client will be stored in the account database previously described. All of this data will be displayed on the main menu in the game.
+
 <img src="https://user-images.githubusercontent.com/57122816/124402840-fc9fe880-dd5c-11eb-9a23-364b8e645e88.png" width="550" height="300"><br>
 (Screenshot Feature - Player's Progress Manager)
 
+Process Function:
+- one statement, players will be given 5 seconds to answer
+- one game, there will be 10 statements that must be answered
+- when the statement that must be answered is finished, then the game is over
+- the client will send the latest total score and total game data to the server
+- the server will update the data in its database
+##### Server Side
+- The ScorePlayReceived() is a function that will receive all the latest client total score and total game data.
+```C#
+public static void ScorePlayReceived(int _fromClient, Packet _packet)
+{
+    string uname = _packet.ReadString();
+    int score = _packet.ReadInt();
+    int play = _packet.ReadInt();
+
+    AccountHandler.AddScorePlay(uname, score, play);
+}
+```
+
+- The AddScorePlay() is a function that will save the previously received data into the account database.
+```C#
+public static void AddScorePlay(string uname, int score, int play)
+{
+    Server.accountDatabase = LoadDatabase<List<AccountDatabase>>("AccountDatabase.xml");
+
+    foreach (AccountDatabase oacc in Server.accountDatabase)
+    {
+        if (uname == oacc.username)
+        {
+            oacc.totalScore = score;
+            oacc.totalPlay = play;
+
+            Console.WriteLine($"Database Score {uname}: {oacc.totalScore}");
+            Console.WriteLine($"Database Play {uname}: {oacc.totalPlay}");
+        }
+    }
+}
+```
+
+##### Client Side
+- This function is a function that will send data on the total score and total game to the server.
+```C#
+if (trivia.Count == 0)
+{
+    Client.instance.myScore += score;
+    Client.instance.myPlay++;
+
+    ClientSend.UpScorePlay(Client.instance.myUname, 
+                           Client.instance.myScore,
+                           Client.instance.myPlay);
+
+    Debug.Log($"Total Score: {Client.instance.myScore}");
+    Debug.Log($"Total Play: {Client.instance.myPlay}");
+
+    gameOverPanel.SetActive(true);
+    scoreFinalText.text = $"Your Score's: {score}";
+    isPlay = false;
+}
+```
+
 ### Trivia Gameplay
+The core mechanics in this game are in the gameplay section, where in this game, each player or client is required to choose between true or false answers from several statements related to knowledge about animals, plants, countries and the world.
+
 <img src="https://user-images.githubusercontent.com/57122816/124402878-307b0e00-dd5d-11eb-9d81-3d56505fa635.png" width="550" height="300"><br>
 <img src="https://user-images.githubusercontent.com/57122816/124402879-3244d180-dd5d-11eb-9c6b-41e7a170751f.png" width="550" height="300"><br>
 (Screenshot Feature - Trivia Gameplay)
