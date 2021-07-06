@@ -1,4 +1,4 @@
-# Leder-Efter
+# Leder-Efter-Trivia
 ![Screenshot_23](https://user-images.githubusercontent.com/57122816/124402879-3244d180-dd5d-11eb-9c6b-41e7a170751f.png)
 
 ## Development Team
