@@ -1,4 +1,6 @@
 # Leder-Efter
+![Screenshot_23](https://user-images.githubusercontent.com/57122816/124402879-3244d180-dd5d-11eb-9c6b-41e7a170751f.png)
+
 ## Development Team
 1. (Author) 4210181002 Farhan Muhammad
 2. (Author) 4210181010 Ilham Jalu Prakosa
@@ -668,5 +670,83 @@ if (trivia.Count == 0)
 The core mechanics in this game are in the gameplay section, where in this game, each player or client is required to choose between true or false answers from several statements related to knowledge about animals, plants, countries and the world.
 
 <img src="https://user-images.githubusercontent.com/57122816/124402878-307b0e00-dd5d-11eb-9d81-3d56505fa635.png" width="550" height="300"><br>
-<img src="https://user-images.githubusercontent.com/57122816/124402879-3244d180-dd5d-11eb-9c6b-41e7a170751f.png" width="550" height="300"><br>
 (Screenshot Feature - Trivia Gameplay)
+
+Process Function:
+- the server sends data questions that will appear in one game
+- the question is displayed, and the client sends the control character to the server
+- if the player character chooses the correct answer, the server will send the score
+- when the game ends, the player will send the final score to the server
+- the latest score received by the server, will be entered into the server's database
+##### Server Side
+- The SetDatabase() is a function that sends 10 data questions what will appear to all clients who join in one room.
+```C#
+public static void SetDatabase(string codeRoom, int maxCategory, int maxQuestion)
+{
+    List<int> numberTemp = new List<int>();
+
+    for (int i = 0; i < maxQuestion; i++)
+    {
+        int categoryResult = 0;
+        int questionResult = 0;
+
+        Random rand = new Random(DateTime.Now.Millisecond);
+
+        do
+        {
+            categoryResult = rand.Next(0, maxCategory);
+            questionResult = rand.Next(0, maxQuestion);
+        } while (numberTemp.Contains(questionResult));
+        
+        numberTemp.Add(questionResult);                                
+        ServerSend.TriviaDatabaseBroadcast(codeRoom, categoryResult, questionResult);
+    }
+}
+```
+
+- The SetQuestion() is a function that sends one question out of 10 already submitted at the start of the game.
+```C#
+public static void SetQuestion(string codeRoom, bool ready, int maxQuestion)
+{
+    int questionResult = 0;
+
+    if (ready)
+    {
+        Random rand = new Random();
+        questionResult = rand.Next(0, maxQuestion);
+        ServerSend.TriviaQuestionBroadcast(codeRoom, questionResult);
+    }
+}
+```
+
+##### Client Side
+- The SetDatabase is a function that accepts 10 questions from the server to be displayed in one game.
+```C#
+public void SetDatabase(string codeRoom, int categoryResult, int questionResult)
+{
+    if (RoomDatabase.instance.roomCode == codeRoom) {
+        if (categoryResult == 0)
+            trivia.Add(TriviaDatabase.instance.triviaHewan[questionResult]);
+        else if (categoryResult == 1)
+            trivia.Add(TriviaDatabase.instance.triviaTumbuhan[questionResult]);
+        else if (categoryResult == 2)
+            trivia.Add(TriviaDatabase.instance.triviaNegara[questionResult]);
+        else if (categoryResult == 3)
+            trivia.Add(TriviaDatabase.instance.triviaDunia[questionResult]);
+    }
+}
+```
+
+- The SetQuestion is a function that receives and returns one query from the one sent by the server.
+```C#
+public void SetQuestion(string codeRoom, int questionResult)
+{
+    if (RoomDatabase.instance.roomCode == codeRoom) {
+        questionTemp = questionResult;
+        questionText.text = $"{trivia[questionResult].question}";
+        questionFix = trivia[questionResult].question;
+        answerFix = trivia[questionResult].answer;
+        StartCoroutine(QuestionCountDown());
+    }
+}
+```
