@@ -174,8 +174,8 @@ private static void SendUDPDataToAll(int _exceptClient, Packet _packet)
 ### Account Database
 The database account used in this project is still in the form of a local database using a file with an .xml extension which will later be applied to the storage and data recall functions on the server side.
 
-<img src="https://user-images.githubusercontent.com/57122816/124402814-ca8e8680-dd5c-11eb-9250-6c9e6d375196.png" width="550" height="300"><br>
-(Screenshot Feature - Account Manager)
+<img src="https://user-images.githubusercontent.com/57122816/124780492-d8b2f180-df6c-11eb-9076-c993de9136ac.gif" width="550" height="300"><br>
+(Screenshot Feature - Sign Up and Sign In Account)
 
 The function below is used to declare the attributes and contents of the account database owned by the server
 ```C#
@@ -351,8 +351,7 @@ public static void SignUpRequest(string uname, string pass)
 ### Room Manager
 In this room management feature, we use the list function as the database implementation, where the system will store room data, as well as all clients in that room.
 
-<img src="https://user-images.githubusercontent.com/57122816/124402829-ebef7280-dd5c-11eb-9559-a3d85ed49853.png" width="550" height="300"><br>
-<img src="https://user-images.githubusercontent.com/57122816/124402886-38d34900-dd5d-11eb-8bd3-04011267a20c.png" width="550" height="300"><br>
+<img src="https://user-images.githubusercontent.com/57122816/124784041-bff80b00-df6f-11eb-909d-8e0c9b4af2da.gif" width="550" height="300"><br>
 (Screenshot Feature - Room Manager)
 
 The function below is used to create and implement a room database
@@ -669,7 +668,8 @@ if (trivia.Count == 0)
 ### Trivia Gameplay
 The core mechanics in this game are in the gameplay section, where in this game, each player or client is required to choose between true or false answers from several statements related to knowledge about animals, plants, countries and the world.
 
-<img src="https://user-images.githubusercontent.com/57122816/124402878-307b0e00-dd5d-11eb-9d81-3d56505fa635.png" width="550" height="300"><br>
+<img src="https://user-images.githubusercontent.com/57122816/124784781-71973c00-df70-11eb-9028-3c427188e9f7.gif" width="550" height="300"><br>
+<img src="https://user-images.githubusercontent.com/57122816124785216-df436800-df70-11eb-998f-495d1c84be22.gif" width="550" height="300"><br>
 (Screenshot Feature - Trivia Gameplay)
 
 Process Function:
