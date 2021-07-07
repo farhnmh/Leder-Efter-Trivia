@@ -669,7 +669,7 @@ if (trivia.Count == 0)
 The core mechanics in this game are in the gameplay section, where in this game, each player or client is required to choose between true or false answers from several statements related to knowledge about animals, plants, countries and the world.
 
 <img src="https://user-images.githubusercontent.com/57122816/124784781-71973c00-df70-11eb-9028-3c427188e9f7.gif" width="550" height="300"><br>
-<img src="https://user-images.githubusercontent.com/57122816124785216-df436800-df70-11eb-998f-495d1c84be22.gif" width="550" height="300"><br>
+<img src="https://user-images.githubusercontent.com/57122816/124785216-df436800-df70-11eb-998f-495d1c84be22.gif" width="550" height="300"><br>
 (Screenshot Feature - Trivia Gameplay)
 
 Process Function:
