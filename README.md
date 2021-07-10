@@ -7,24 +7,18 @@ LederEfter is a casual online game with the theme of knowledge trivia in several
 3. Platform: Windows
 
 ## Credit
-1. (Author) 4210181002 Farhan Muhammad
-2. (Author) 4210181010 Ilham Jalu Prakosa
-3. (Course) Praktikum Desain Multiplayer Game Online
+(Author) 4210181002 Farhan Muhammad
+<br>(Author) 4210181010 Ilham Jalu Prakosa
+<br>(Course) Praktikum Desain Multiplayer Game Online
 
-[![github](https://user-images.githubusercontent.com/57122816/125156839-cbc31780-e191-11eb-86d7-5b846c25a4fa.png)][1]
-[![instagram](https://user-images.githubusercontent.com/57122816/125156881-0e84ef80-e192-11eb-955b-fbb996962df7.png)][2]
-[![linkedin](https://user-images.githubusercontent.com/57122816/125156940-4f7d0400-e192-11eb-8b9c-5bc9cfa3f879.png)][3]
-[![itchio](https://user-images.githubusercontent.com/57122816/125157313-7d634800-e194-11eb-9c52-8ef389bd43b4.png)][4]
+[![github](https://user-images.githubusercontent.com/57122816/125156839-cbc31780-e191-11eb-86d7-5b846c25a4fa.png)](http://www.github.com/farhnmh)
+[![instagram](https://user-images.githubusercontent.com/57122816/125156881-0e84ef80-e192-11eb-955b-fbb996962df7.png)](https://www.instagram.com/farhaanmuha)
+[![linkedin](https://user-images.githubusercontent.com/57122816/125156940-4f7d0400-e192-11eb-8b9c-5bc9cfa3f879.png)](https://www.linkedin.com/in/farhaanmuha)
+[![itchio](https://user-images.githubusercontent.com/57122816/125157313-7d634800-e194-11eb-9c52-8ef389bd43b4.png)](https://farhaanada.itch.io/leder-efter-trivia)
 
-[1]: http://www.github.com/farhnmh
-[2]: https://www.instagram.com/farhaanmuha
-[3]: https://www.linkedin.com/in/farhaanmuha
-[4]: https://farhaanada.itch.io/leder-efter-trivia
-
-## Document-Information-Detail
-You can download the first released in [itch.io](https://docs.google.com/presentation/d/1IT5tO_OZ1EZySGK0vKDDZZpI3ZeyAXCc-Gt6M5B67sk/edit?usp=sharing)<br>
-High Concept Document can be accessed in [here](https://docs.google.com/presentation/d/1IT5tO_OZ1EZySGK0vKDDZZpI3ZeyAXCc-Gt6M5B67sk/edit?usp=sharing)<br>
-Game Concept Document can be accessed in [here](4210181002_4210181010_GDD.docx)
+## Resources Technology
+Made With [Unity 2019 LTS](https://unity.com/)<br>
+Server Deployed On [Google Cloud Service](https://cloud.google.com/)
 
 ## Diagram-Overview
 ### Flowchart-Explanation
