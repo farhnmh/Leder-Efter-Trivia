@@ -28,7 +28,7 @@ Server Deployed On [Google Cloud Service](https://cloud.google.com/)
 <img src="https://user-images.githubusercontent.com/57122816/125160206-ec956800-e1a5-11eb-9bb6-67a477f9cf81.png" width="650" height="450"><br>
 
 ## Game-Feature
-### Packets
+### [Packet](Leder-Efter-Server/Leder-Efter-Server/Packet.cs)
 This feature is used to replace multithreaded and multiclient functions. For the system, the way it works is to provide an identity like a packet delivery with its address, on every data sent or received by the server or each client. This will help with faster and more accurate data processing, due to packet giving and recognition.
 #### 1. Packets Identifier
 In this section, the function below will provide several identities that will later be used when sending or receiving packages.
@@ -37,55 +37,13 @@ Meanwhile, in this section, the packet handlers function is one of the functions
 #### 3. Data Transfer Function
 Here are some functions that can be used to send data with the appropriate protocol, TCP or UDP. However, in this project we use a function that applies only the TCP protocol.
 
-### Account Database
+### [Account Database](Leder-Efter-Server/Leder-Efter-Server/AccountHandler.cs)
 The database account used in this project is still in the form of a local database using a file with an .xml extension which will later be applied to the storage and data recall functions on the server side.
-#### 1. Sign In Account
-Process Function: 
-- client sends the username and password data
-- server receives the data
-- server validates the account on the database server
-- validation results are sent back to the client
-#### 2. Sign Up Account
-Process Function:
-- client sends username and password data
-- server receives data
-- the server validates the account on the database server
-- if there is an account with the same username, then the sign up failed
-- if not, then the sign up was successful
-- validation results are sent back to the client
 
-### Room Manager
+### [Room Manager](Leder-Efter-Server/Leder-Efter-Server/RoomHandler.cs)
 In this room management feature, we use the list function as the database implementation, where the system will store room data, as well as all clients in that room.
-#### 1. Host A Room
-Process Function:
-- the client sends the room code
-- the server receives the code and validates whether there is a room with the same code
-- if there is, the process will fail
-- if not, the process will be successful
-- server validation results are sent to the client
-#### 2. Join A Room
-Process Function:
-- client sends room code
-- the server receives the code and validates whether there is a room with the same code
-- if there is, the server will broadcast client data to other clients
-- otherwise the process will fail
-- server validation result sent to client
-#### 3. Leave A Room
-Process Function:
-- client sends room code
-- the server receives the code and validates whether there is a room with the same code
-- if there is, the server will broadcast client data to other clients for deletion from database
-- otherwise the process will fail
-- server validation result sent to client
-#### 4. Destroy A Room
-Process Function:
-- client sends room code
-- the server receives the code and validates whether there is a room with the same code
-- if there is, the server will delete the room and its database
-- otherwise the process will fail
-- server validation result sent to client
 
-### Player's Progress Handler
+### [Player's Progress Handler](Leder-Efter/Assets/Scripts/Scene%20Script/UIMenuManager.cs)
 In this feature, all game progress data for each client will be stored in the account database previously described. All of this data will be displayed on the main menu in the game.
 Process Function:
 - one statement, players will be given 5 seconds to answer
@@ -94,7 +52,7 @@ Process Function:
 - the client will send the latest total score and total game data to the server
 - the server will update the data in its database
 
-### Trivia Gameplay
+### [Trivia Gameplay](Leder-Efter/Assets/Scripts/Scene%20Script/UITriviaManager.cs)
 The core mechanics in this game are in the gameplay section, where in this game, each player or client is required to choose between true or false answers from several statements related to knowledge about animals, plants, countries and the world.
 Process Function:
 - the server sends data questions that will appear in one game
